@@ -6,6 +6,8 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const errorMiddle = require('./middleware/error');
+const auth = require('./routes/authRoutes')
+const user = require('./routes/userRoutes')
 
 require("dotenv").config();
 
@@ -18,10 +20,19 @@ mongoose.connect(process.env.MONGO_URI,{
 }).then(()=>console.log(`DataBase Connected to ${mongoose.connection.host}`))
 .catch((error)=>console.log(error));
 
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 app.use(morgan('dev'));
-app.use(bodyParser.json({limit:"50mb",extended:true}));
 app.use(cookieParser())
 app.use(cors())
+
+//Routes
+app.get('/get',(req,res)=>{
+    res.send("Hello frm Node JS")
+})
+app.use("/api/v1/",auth)
+app.use("/api/v1/",user)
+
 
 app.use(errorMiddle);
 
