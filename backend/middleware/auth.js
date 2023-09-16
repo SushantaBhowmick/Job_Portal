@@ -15,6 +15,6 @@ exports.isAuthenticated = catachAsyncErrors(async(req,res,next)=>{
 
 exports.isAdmin = catachAsyncErrors(async(req,res,next)=>{
 
-    if(req.user.role !== 'admin') return next(new ErrorHandler("User not allowed to access this resourse",401));
+    if(req.user.role !== 'admin' && req.user.role !== "company") return next(new ErrorHandler("User not allowed to access this resourse",401));
     next();
 })
