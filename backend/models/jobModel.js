@@ -13,15 +13,15 @@ const jobSchema = new mongoose.Schema({
         required:[true,"enter your description"],
         trim:true,
         minlength:[10,"descriptoin must be more than 10 chareaters"],
-        maxlength:[70,"descriptoin can't be exceed 70 chareaters"],
     },
     salary:{
         type: String,
         required:[true,"Salary is required"],
-       trim:true,
+        trim:true,
     },
     location:{
         type:String,
+        required:true,
     },
     available:{
         type:Boolean,
