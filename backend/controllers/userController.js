@@ -53,6 +53,7 @@ exports.updateUser = catachAsyncErrors(async(req,res,next)=>{;
 exports.deleteUser = catachAsyncErrors(async(req,res,next)=>{;
 
     const user= await User.findByIdAndRemove(req.params.id);
+    if(!user) return next(new ErrorHandler("User Not Found",404));
     
     res.status(200).json({
         success:true,

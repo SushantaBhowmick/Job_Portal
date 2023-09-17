@@ -9,6 +9,7 @@ const errorMiddle = require('./middleware/error');
 const auth = require('./routes/authRoutes')
 const user = require('./routes/userRoutes')
 const jobType = require('./routes/jobTypeRoutes')
+const job = require('./routes/jobsRoute')
 
 require("dotenv").config();
 
@@ -34,6 +35,7 @@ app.get('/get',(req,res)=>{
 app.use("/api/v1/",auth)
 app.use("/api/v1/",user)
 app.use("/api/v1/",jobType)
+app.use("/api/v1/",job)
 
 
 app.use(errorMiddle);

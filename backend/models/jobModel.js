@@ -28,12 +28,12 @@ const jobSchema = new mongoose.Schema({
         default:true,
     },
     user:{
-        type: ObjectId,
+        type: mongoose.Schema.ObjectId,
         ref:"User",
         required:true,
     },
     jobType:{
-        type: ObjectId,
+        type: mongoose.Schema.ObjectId,
         ref:"JobType",
         required:true,
     },
