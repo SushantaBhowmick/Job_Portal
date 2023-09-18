@@ -39,7 +39,7 @@ exports.showJobs = catachAsyncErrors(async (req, res, next) => {
     const keyword = req.query.keyword ? {
         title: {
             $regex: req.query.keyword,
-            $options: "i"
+            $options: 'i'
         }
     } : {}
 
@@ -70,6 +70,7 @@ exports.showJobs = catachAsyncErrors(async (req, res, next) => {
     const count = await Job.find({ ...keyword, jobType: category,location:locationFilter }).countDocuments();
 
     const jobs = await Job.find({ ...keyword, jobType: category,location:locationFilter })
+        .sort({craetedAt:-1})
         .skip(pageSize * (currentPage - 1))
         .limit(pageSize)
 

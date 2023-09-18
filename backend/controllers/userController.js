@@ -60,3 +60,27 @@ exports.deleteUser = catachAsyncErrors(async(req,res,next)=>{;
         message:"User Deleted!",
     })
 })
+
+exports.createUserJobsHistory = catachAsyncErrors(async(req,res,next)=>{;
+
+    const {title,descripton,salary,location} = req.body;
+    const currentUser = await User.findOne({_id:req.user._id}).select('-password');
+    if(!currentUser){
+        return next(new ErrorHandler("You must Login",400))
+    }else{
+        const addJobHistory ={
+            title,
+            descripton,
+            salary,
+            location,
+            user:req.user._id
+        }
+        currentUser.jobsHistory.push(addJobHistory);
+        await currentUser.save();
+    }
+
+    res.status(200).json({
+        success:true,
+        currentUser
+    })
+})

@@ -3,6 +3,43 @@ const bcrypt = require('bcryptjs');
 const validator = require('validator')
 const jwt = require('jsonwebtoken');
 
+const jobHistorySchema = new mongoose.Schema({
+    title:{
+        type: String,
+        trim:true,
+    },
+    description:{
+        type: String,
+    },
+    salary:{
+        type: String,
+        trim:true,
+    },
+    location:{
+        type:String,
+    },
+    interViewDate:{
+        type:Date,
+    },
+    applicationStatus:{
+        type:String,
+        enum:['pending','accepted','rejected'],
+        default:"pending",
+    },
+    user:{
+        type: mongoose.Schema.ObjectId,
+        ref:"User",
+        required:true,
+    },
+
+  
+},{timestamps:true})
+
+
+
+module.exports = mongoose.model("Job History",jobHistorySchema);
+
+
 const userSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -23,6 +60,7 @@ const userSchema = new mongoose.Schema({
         required:[true,"enter your password"],
         minlength:[6,"password must be more than 6 chareaters"],
     },
+    jobsHistory:[jobHistorySchema],
     role:{
         type: String,
         default:"user"
