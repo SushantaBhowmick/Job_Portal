@@ -26,6 +26,22 @@ exports.allJobType = catachAsyncErrors(async(req,res,next)=>{
     })
 })
 
+exports.updateJobType = catachAsyncErrors(async(req,res,next)=>{
+
+    const job = await JobType.findByIdAndUpdate(req.params.id,req.body,
+        {
+            new:true,
+            useFindAndModify:false
+        });
+    if(!job) return next(new ErrorHandler("Job Type Not Found",404))
+
+    res.status(200).json({
+        success:true,
+        message:"Job Type updated successfully!",
+        job,
+    })
+})
+
 exports.deleteJobType = catachAsyncErrors(async(req,res,next)=>{
 
     const job = await JobType.findByIdAndRemove(req.params.id);

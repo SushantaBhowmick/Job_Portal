@@ -5,20 +5,20 @@ const ErrorHandler = require("../utils/errorHandler");
 exports.allUsers = catachAsyncErrors(async(req,res,next)=>{
 
     const pageSize = 10;
-    const page = Number(req.query.pageNumber) || 1;
+    const currentPage = Number(req.query.pageNumber) || 1;
     const count = await User.find({}).estimatedDocumentCount();
 
     const users= await User.find()
     .sort({createdAt:-1})
     .select('-password')
-    .skip(pageSize*(page-1))
+    .skip(pageSize*(currentPage-1))
     .limit(pageSize);
 
     res.status(200).json({
         success:true,
         users,
-        page,
-        pages:Math.ceil(count/pageSize),
+        currentPage,
+        totalPages:Math.ceil(count/pageSize),
         count
     })
     next();
