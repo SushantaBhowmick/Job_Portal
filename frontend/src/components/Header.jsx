@@ -10,6 +10,7 @@ const Header = () => {
         minHeight:400,
         justifyContent:'center',
         backgroundImage:`url(${headerImage})`,
+        marginTop:"50px",
         backgroundSize:"cover",
         backgroundPosition:"center",
         backgroundColor:theme.palette.secondary.main, 

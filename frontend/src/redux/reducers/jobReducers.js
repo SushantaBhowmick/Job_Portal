@@ -11,6 +11,7 @@ export const loadJobReducers = createReducer({jobs:[]},{
         state.count = action.payload.count;
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
+        state.setUniqueLocation = action.payload.setUniqueLocation;
     },
     loadJobFail:(state,action)=>{
         state.loading= false;
