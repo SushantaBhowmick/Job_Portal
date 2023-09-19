@@ -80,6 +80,7 @@ exports.showJobs = catachAsyncErrors(async (req, res, next) => {
         currentPage,
         totalPages: Math.ceil(count / pageSize),
         count,
+        setUniqueLocation,
     })
 })
 
