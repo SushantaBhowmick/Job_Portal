@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit'
 import { loadJobReducers } from './reducers/jobReducers';
+import { loadJobTypeReducers } from './reducers/jobTypeReducers';
 
 
 
 const store = configureStore({
     reducer:{
         loadJobs: loadJobReducers,
+        jobTypes: loadJobTypeReducers,
     }
 })
 
