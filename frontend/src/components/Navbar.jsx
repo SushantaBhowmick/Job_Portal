@@ -13,14 +13,16 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {useTheme} from '@emotion/react'
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAction } from '../redux/actions/userAction';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
     const {palette} = useTheme();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,6 +38,12 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const {isAuthenticated}=useSelector(state=>state.user);
+
+  const logoutHandler=()=>{
+    dispatch(logoutAction())
+    // handleCloseNavMenu()
+  }
 
   return (
     <AppBar position="fixed">
@@ -89,11 +97,23 @@ function Navbar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              
+                <Link to={`/`} style={{textDecoration:'none',color:'black'}}>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Home</Typography>
                 </MenuItem>
-              ))}
+                </Link>
+                <Link to={`/jobs`} style={{textDecoration:'none',color:'black'}}>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Jobs</Typography>
+                </MenuItem>
+                </Link>
+                <Link to={`/blog`} style={{textDecoration:'none',color:'black'}}>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Blog</Typography>
+                </MenuItem>
+                </Link>
+            
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -116,21 +136,27 @@ function Navbar() {
             JOB PORTAL
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+          <Link to={`/`} style={{textDecoration:'none',color:'white'}}>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Home</Typography>
+                </MenuItem>
+                </Link>
+                <Link to={`/jobs`} style={{textDecoration:'none',color:'white'}}>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Jobs</Typography>
+                </MenuItem>
+                </Link>
+                <Link to={`/blog`} style={{textDecoration:'none',color:'white'}}>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Blog</Typography>
+                </MenuItem>
+                </Link>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar  />
               </IconButton>
             </Tooltip>
             <Menu
@@ -149,11 +175,35 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+               {
+                isAuthenticated? (
+                  <>
+                  <Link to={`/profile`} style={{textDecoration:'none',color:'black'}}>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Profile</Typography>
+                  </MenuItem>
+                  </Link>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Button onClick={logoutHandler} textAlign="center">Logout</Button>
+                  </MenuItem>
+                  </>
+                ):(
+                <>
+                  <Link to={`/login`} style={{textDecoration:'none',color:'black'}}>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Login</Typography>
+                  </MenuItem>
+                  </Link>
+
+                  <Link to={`/signup`} style={{textDecoration:'none',color:'black'}}>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Sign Up</Typography>
+                  </MenuItem>
+                  </Link>
+                </>
+                )
+               }
+              
             </Menu>
           </Box>
         </Toolbar>

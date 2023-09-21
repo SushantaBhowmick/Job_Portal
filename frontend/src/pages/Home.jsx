@@ -5,6 +5,7 @@ import { jobLoadAction } from '../redux/actions/jobAction'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Box,
+  Button,
   Card,
   Container,
   ListItemIcon,
@@ -22,6 +23,7 @@ import Loader from '../components/Loader'
 import { jobTypeLoadAction } from '../redux/actions/jobTypeAction'
 import SelectComponent from '../components/SelectComponent'
 import LocationOn from '@mui/icons-material/LocationOn'
+import { toast } from 'react-toastify'
 
 const Home = () => {
   
@@ -43,7 +45,9 @@ const Home = () => {
   const handleChangeCategory = (e) => {
     setCat(e.target.value);
 }
-
+const show=()=>{
+  toast.success("hi")
+}
   return (
     <>
       <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}
@@ -72,6 +76,7 @@ const Home = () => {
                                         Filter job by location
                                     </Typography>
                                     <MenuList>
+                                      <Link to={'/'} >All</Link>
                                         {
                                             setUniqueLocation && setUniqueLocation.map((location, i) => (
                                                 <MenuItem key={i}>
@@ -120,6 +125,7 @@ const Home = () => {
                       />
                     ))
               }
+              <Button onClick={show}>Click</Button>
               <Stack spacing={2} >
                 <Pagination page={page} count={totalPages === 0 ? 1 : totalPages} onChange={(event, value) => setPage(value)} />
               </Stack>

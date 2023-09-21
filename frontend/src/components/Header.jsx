@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { Box } from '@mui/material'
 import React from 'react'
 import headerImage from "../images/jobbg.jpg"
+import SearchBar from './SearchBar'
 
 const Header = () => {
 
@@ -19,7 +20,7 @@ const Header = () => {
   return (
     <>
     <StyleHeader>
-
+      <SearchBar/>
     </StyleHeader>
     </>
   )

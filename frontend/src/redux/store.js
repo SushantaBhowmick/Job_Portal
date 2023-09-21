@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import { loadJobReducers } from './reducers/jobReducers';
 import { loadJobTypeReducers } from './reducers/jobTypeReducers';
+import { userReducers } from './reducers/userReducers';
 
 
 
@@ -8,6 +9,7 @@ const store = configureStore({
     reducer:{
         loadJobs: loadJobReducers,
         jobTypes: loadJobTypeReducers,
+        user:userReducers,
     }
 })
 
