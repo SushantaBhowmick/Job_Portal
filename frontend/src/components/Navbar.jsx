@@ -109,7 +109,7 @@ function Navbar() {
                 </MenuItem>
                 </Link>
                 <Link to={`/blog`} style={{textDecoration:'none',color:'black'}}>
-                <MenuItem onClick={handleCloseNavMenu}>
+                <MenuItem  onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Blog</Typography>
                 </MenuItem>
                 </Link>
@@ -177,7 +177,7 @@ function Navbar() {
             >
                {
                 isAuthenticated? (
-                  <>
+                  <div>
                   <Link to={`/user/dashboard`} style={{textDecoration:'none',color:'black'}}>
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">DashBoard</Typography>
@@ -186,9 +186,9 @@ function Navbar() {
                   <MenuItem onClick={logoutHandler}>
                     <Typography textAlign="center">Logout</Typography>
                   </MenuItem>
-                  </>
+                  </div>
                 ):(
-                <>
+                <div>
                   <Link to={`/login`} style={{textDecoration:'none',color:'black'}}>
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">Login</Typography>
@@ -200,7 +200,7 @@ function Navbar() {
                     <Typography textAlign="center">Sign Up</Typography>
                   </MenuItem>
                   </Link>
-                </>
+                </div>
                 )
                }
               

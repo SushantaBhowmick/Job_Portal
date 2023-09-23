@@ -13,6 +13,7 @@ import {ProtectedRoute} from 'protected-route-react'
 import Layout from './pages/global/Layout'
 import UserJobsHistory from './pages/user/UserJobHistory'
 import { ProSidebarProvider } from 'react-pro-sidebar'
+import { CssBaseline } from '@mui/material'
 
 const App = () => {
 
@@ -44,8 +45,7 @@ const UserInfoDashboardHOC = Layout(Profile);
   
   return (
     <>
-   
-    <ProSidebarProvider>
+   <CssBaseline />
     <Router>
     <Routes>
      <Route path='/' element={<Home />} />
@@ -74,7 +74,6 @@ const UserInfoDashboardHOC = Layout(Profile);
     </Routes>
     <ToastContainer/>
     </Router>
-    </ProSidebarProvider>
     </>
   )
 }

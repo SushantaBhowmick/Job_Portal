@@ -63,14 +63,14 @@ exports.deleteUser = catachAsyncErrors(async(req,res,next)=>{;
 
 exports.createUserJobsHistory = catachAsyncErrors(async(req,res,next)=>{;
 
-    const {title,descripton,salary,location} = req.body;
+    const {title,description,salary,location} = req.body;
     const currentUser = await User.findOne({_id:req.user._id}).select('-password');
     if(!currentUser){
         return next(new ErrorHandler("You must Login",400))
     }else{
         const addJobHistory ={
             title,
-            descripton,
+            description,
             salary,
             location,
             user:req.user._id

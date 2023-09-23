@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Sidebar, Menu, MenuItem, menuClasses, useProSidebar } from 'react-pro-sidebar';
+import { Sidebar, Menu, MenuItem, menuClasses } from 'react-pro-sidebar';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { Box, Button, IconButton, useTheme } from '@mui/material';
@@ -19,7 +19,7 @@ import LoginIcon from '@mui/icons-material/Login';
 const SidebarAdm = () => {
     const { user } = useSelector(state => state.user);
     const { palette } = useTheme();
-    const { collapsed } = useProSidebar();
+    // const { collapsed } = useProSidebar();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -44,13 +44,12 @@ const SidebarAdm = () => {
                     <Box>
                         <Box sx={{ pt: 3, pb: 5, display: "flex", justifyContent: "center" }}>
 
-                            {
-                                collapsed ?
+                            
                                     <Avatar alt="logo dashboard" src={logoDashboard} /> :
                                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                                         <img style={{ width: "100px", heigth: "100px", textAlign: "center", transition: "all ease-out .5s" }} src={logoDashboard} alt="logo dashboard" />
                                     </Box>
-                            }
+                            
 
                         </Box>
 

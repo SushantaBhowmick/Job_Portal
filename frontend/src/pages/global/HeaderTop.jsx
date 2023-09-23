@@ -9,7 +9,6 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 //import sidebar hook
-import { useProSidebar } from 'react-pro-sidebar';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -55,12 +54,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const HeaderTop = () => {
-    const { collapseSidebar } = useProSidebar();
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ boxShadow: 0 }}>
                 <Toolbar>
-                    <IconButton onClick={() => collapseSidebar()}
+                    <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
@@ -82,6 +80,7 @@ const HeaderTop = () => {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
+                        id='search'
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
                         />
