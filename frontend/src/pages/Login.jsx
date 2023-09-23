@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import LockClockOutlined from '@mui/icons-material/LockClockOutlined'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import * as yup from 'yup';
 import { useDispatch } from 'react-redux'
 import { loginAction } from '../redux/actions/userAction'
 import { useNavigate } from 'react-router-dom'
@@ -14,30 +13,17 @@ import './login.css'
 
 
 
-const LogIn = ({isAuthenticated}) => {
+const LogIn = ({isAuthenticated,loading}) => {
 
     const [email,setEmail]= useState("");
     const [password,setPassword]= useState("");
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    // const navigate = useNavigate();
-    // const { isAuthenticated, user } = useSelector(state => state.user);
     
     const submitHandler=(e)=>{
         e.preventDefault();
         dispatch(loginAction(email,password));
-        // console.log(email,password)
     }
-
-    useEffect(() => {
-        if(isAuthenticated){
-     navigate('/')
-        }else{
-     navigate('/login')
-        }
-    }, [navigate,isAuthenticated])
-    
 
     return (
         <>
@@ -97,7 +83,7 @@ const LogIn = ({isAuthenticated}) => {
                             placeholder="Password"
                         />
 
-                        <Button fullWidth variant="contained" type='submit' >Log In</Button>
+                        <Button disabled={loading} fullWidth variant="contained" type='submit' >Log In</Button>
                     </Box>
                     </form>
                 </Box>

@@ -11,25 +11,25 @@ import Avatar from '@mui/material/Avatar';
 import logoDashboard from '../../images/hr-project.png'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogoutAction, userProfileAction } from '../../redux/actions/userAction';
+import { loadUserAction, logoutAction } from '../../redux/actions/userAction';
 import { useNavigate } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
 
 
 const SidebarAdm = () => {
-    const { userInfo } = useSelector(state => state.signIn);
+    const { user } = useSelector(state => state.user);
     const { palette } = useTheme();
     const { collapsed } = useProSidebar();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(userProfileAction());
-    }, []);
+        dispatch(loadUserAction());
+    }, [dispatch]);
 
     //log out 
     const logOut = () => {
-        dispatch(userLogoutAction());
+        dispatch(logoutAction());
         window.location.reload(true);
         setTimeout(() => {
             navigate('/');
@@ -82,14 +82,16 @@ const SidebarAdm = () => {
 
                         >
                             {
-                                userInfo && userInfo.role === 1 ?
+                                user && user.role === "admin" ?
                                     <>
+                                        <MenuItem component={<Link to="/" />} icon={<DashboardIcon />}> Home </MenuItem>
                                         <MenuItem component={<Link to="/admin/dashboard" />} icon={<DashboardIcon />}> Dashboard </MenuItem>
                                         <MenuItem component={<Link to="/admin/users" />} icon={<GroupAddIcon />}> Users </MenuItem>
                                         <MenuItem component={<Link to="/admin/jobs" />} icon={<WorkIcon />}> Jobs </MenuItem>
                                         <MenuItem component={<Link to="/admin/category" />} icon={<CategoryIcon />}> Category </MenuItem>
                                     </> :
                                     <>
+                                        <MenuItem component={<Link to="/" />} icon={<DashboardIcon />}> Home </MenuItem>
                                         <MenuItem component={<Link to="/user/dashboard" />} icon={<DashboardIcon />}> Dashboard </MenuItem>
                                         <MenuItem component={<Link to="/user/jobs" />} icon={<WorkHistoryIcon />}> Applied Jobs </MenuItem>
                                         <MenuItem component={<Link to="/user/info" />} icon={<Person3Icon />}> Personal Info </MenuItem>

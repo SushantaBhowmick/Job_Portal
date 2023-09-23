@@ -178,13 +178,13 @@ function Navbar() {
                {
                 isAuthenticated? (
                   <>
-                  <Link to={`/profile`} style={{textDecoration:'none',color:'black'}}>
+                  <Link to={`/user/dashboard`} style={{textDecoration:'none',color:'black'}}>
                   <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Profile</Typography>
+                    <Typography textAlign="center">DashBoard</Typography>
                   </MenuItem>
                   </Link>
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Button onClick={logoutHandler} textAlign="center">Logout</Button>
+                  <MenuItem onClick={logoutHandler}>
+                    <Typography textAlign="center">Logout</Typography>
                   </MenuItem>
                   </>
                 ):(

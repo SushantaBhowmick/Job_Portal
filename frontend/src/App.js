@@ -8,11 +8,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadUserAction } from './redux/actions/userAction'
 import 'react-toastify/dist/ReactToastify.css'
 import Profile from './pages/user/Profile'
+import UserDashboard from './pages/user/userDashboard'
+import {ProtectedRoute} from 'protected-route-react'
+import Layout from './pages/global/Layout'
+import UserJobsHistory from './pages/user/UserJobHistory'
+import { ProSidebarProvider } from 'react-pro-sidebar'
 
 const App = () => {
 
   const dispatch = useDispatch();
-  const {user,isAuthenticated,message,error} = useSelector(state=>state.user)
+  const {user,isAuthenticated,message,error,loading} = useSelector(state=>state.user)
 
   useEffect(()=>{
     if(error){
@@ -28,21 +33,48 @@ const App = () => {
   useEffect(() => {
    dispatch(loadUserAction())
   }, [dispatch])
+
+  //HOC
+  const UserDashboardHOC = Layout(UserDashboard);
+const UserJobsHistoryHOC = Layout(UserJobsHistory);
+const UserInfoDashboardHOC = Layout(Profile);
+// const AdminDashboardHOC = Layout(AdminDashboard);
+// const DashUsersHOC = Layout(DashUsers);
+// const DashJobsHOC = Layout(DashJobs);
   
   return (
     <>
+   
+    <ProSidebarProvider>
     <Router>
     <Routes>
      <Route path='/' element={<Home />} />
      <Route path='/search/location/:location' element={<Home />} />
      <Route path='/search/:keyword' element={<Home />} />
-     <Route path='login' element={<LogIn isAuthenticated={isAuthenticated}/>} />
-     <Route path='profile' element={<Profile />} />
+
+     <Route path='login' element={<ProtectedRoute
+      isAuthenticated={!isAuthenticated} redirect='/user/dashboard'>
+      <LogIn loading={loading}/>
+     </ProtectedRoute>} />
+
+     <Route path='user/info' element={<ProtectedRoute isAuthenticated={isAuthenticated} >
+      <UserInfoDashboardHOC />
+     </ProtectedRoute>} />
+
+     <Route path='user/jobs' element={<ProtectedRoute isAuthenticated={isAuthenticated} >
+      <UserJobsHistoryHOC />
+     </ProtectedRoute>} />
+     
+     <Route path='user/dashboard' element={<ProtectedRoute 
+     isAuthenticated={isAuthenticated} >
+      <UserDashboardHOC />
+     </ProtectedRoute>} />
 
      <Route path='*' element={<NotFound />} />
     </Routes>
     <ToastContainer/>
     </Router>
+    </ProSidebarProvider>
     </>
   )
 }

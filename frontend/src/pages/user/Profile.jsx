@@ -1,10 +1,18 @@
-import { useTheme } from '@mui/material';
+import LocationOn from '@mui/icons-material/LocationOn';
+import { Avatar,
+     Chip,
+     Divider, 
+     IconButton, 
+     Stack,
+     Switch, 
+     useTheme 
+    } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
-
+import pp from '../../images/pp.jpeg'
 
 
 const Profile = () => {
@@ -12,8 +20,8 @@ const Profile = () => {
     const { palette } = useTheme();
     return (
         <>
-            <Box sx={{ maxWidth: "50%", margin: "auto", pt: 10 }}>
-                <Card sx={{ minWidth: 275, bgcolor: palette.secondary.midNightBlue }}>
+            <Box  sx={{ maxWidth: "50%", margin: "auto", pt: 10 }}>
+                <Card  sx={{ minWidth: 275, bgcolor: palette.secondary.midNightBlue }}>
                     <CardContent>
                         <Typography sx={{ fontSize: 16 }} color="#fafafa" gutterBottom>
                             Personal Info
@@ -32,6 +40,7 @@ const Profile = () => {
                     </CardContent>
                 </Card>
             </Box>
+
         </>
     )
 }
