@@ -12,8 +12,9 @@ import UserDashboard from './pages/user/userDashboard'
 import {ProtectedRoute} from 'protected-route-react'
 import Layout from './pages/global/Layout'
 import UserJobsHistory from './pages/user/UserJobHistory'
-import { ProSidebarProvider } from 'react-pro-sidebar'
 import { CssBaseline } from '@mui/material'
+import DashUsers from './pages/admin/DashUsers'
+import JobDetails from './pages/JobDetails'
 
 const App = () => {
 
@@ -40,7 +41,7 @@ const App = () => {
 const UserJobsHistoryHOC = Layout(UserJobsHistory);
 const UserInfoDashboardHOC = Layout(Profile);
 // const AdminDashboardHOC = Layout(AdminDashboard);
-// const DashUsersHOC = Layout(DashUsers);
+const DashUsersHOC = Layout(DashUsers);
 // const DashJobsHOC = Layout(DashJobs);
   
   return (
@@ -57,6 +58,10 @@ const UserInfoDashboardHOC = Layout(Profile);
       <LogIn loading={loading}/>
      </ProtectedRoute>} />
 
+     <Route path='job/:id' element={
+      <JobDetails />
+    } />
+
      <Route path='user/info' element={<ProtectedRoute isAuthenticated={isAuthenticated} >
       <UserInfoDashboardHOC />
      </ProtectedRoute>} />
@@ -69,6 +74,9 @@ const UserInfoDashboardHOC = Layout(Profile);
      isAuthenticated={isAuthenticated} >
       <UserDashboardHOC />
      </ProtectedRoute>} />
+
+     <Route path='/admin/users' element={<ProtectedRoute isAuthenticated={isAuthenticated}><DashUsersHOC /></ProtectedRoute>} />
+
 
      <Route path='*' element={<NotFound />} />
     </Routes>

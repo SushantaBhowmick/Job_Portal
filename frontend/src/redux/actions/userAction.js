@@ -63,3 +63,23 @@ export const loadUserAction = ()=> async(dispatch)=>{
         })
     }
 }
+
+export const allUserAction = ()=> async(dispatch)=>{
+
+    try {
+    dispatch({type:"allUserRequest"})
+        const {data} = await axios.get(`${server}/allusers`,
+         {
+            withCredentials: true,
+        })
+        dispatch({
+            type:"allUserSuccess",
+            payload:data
+        })
+    } catch (error) {
+        dispatch({
+            type:"allUserFail",
+            payload:error.response.data.message
+        })
+    }
+}

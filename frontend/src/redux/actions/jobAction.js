@@ -17,3 +17,20 @@ export const jobLoadAction = (pageNumber,keyword='',cat='',location='')=> async(
         })
     }
 }
+
+export const jobDetailsAction = (id)=> async(dispatch)=>{
+    dispatch({type:"loadJobDetailsRequest"})
+
+    try {
+        const {data} = await axios.get(`${server}/job/${id}`)
+        dispatch({
+            type:"loadJobDetailsSuccess",
+            payload:data
+        })
+    } catch (error) {
+        dispatch({
+            type:"loadJobDetailsFail",
+            payload:error.response.data.message
+        })
+    }
+}

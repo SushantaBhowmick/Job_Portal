@@ -12,17 +12,18 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import {useTheme} from '@emotion/react'
-import { Link } from 'react-router-dom';
+import { useTheme } from '@emotion/react'
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../redux/actions/userAction';
 
 
 function Navbar() {
-    const {palette} = useTheme();
+  const { palette } = useTheme();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -38,10 +39,11 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const {isAuthenticated}=useSelector(state=>state.user);
+  const { isAuthenticated, user } = useSelector(state => state.user);
 
-  const logoutHandler=()=>{
+  const logoutHandler = () => {
     dispatch(logoutAction())
+    // navigate("/login")
     // handleCloseNavMenu()
   }
 
@@ -97,23 +99,23 @@ function Navbar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              
-                <Link to={`/`} style={{textDecoration:'none',color:'black'}}>
+
+              <Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}>
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Home</Typography>
                 </MenuItem>
-                </Link>
-                <Link to={`/jobs`} style={{textDecoration:'none',color:'black'}}>
+              </Link>
+              <Link to={`/jobs`} style={{ textDecoration: 'none', color: 'black' }}>
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Jobs</Typography>
                 </MenuItem>
-                </Link>
-                <Link to={`/blog`} style={{textDecoration:'none',color:'black'}}>
-                <MenuItem  onClick={handleCloseNavMenu}>
+              </Link>
+              <Link to={`/blog`} style={{ textDecoration: 'none', color: 'black' }}>
+                <MenuItem onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Blog</Typography>
                 </MenuItem>
-                </Link>
-            
+              </Link>
+
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -136,27 +138,27 @@ function Navbar() {
             JOB PORTAL
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <Link to={`/`} style={{textDecoration:'none',color:'white'}}>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Home</Typography>
-                </MenuItem>
-                </Link>
-                <Link to={`/jobs`} style={{textDecoration:'none',color:'white'}}>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Jobs</Typography>
-                </MenuItem>
-                </Link>
-                <Link to={`/blog`} style={{textDecoration:'none',color:'white'}}>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Blog</Typography>
-                </MenuItem>
-                </Link>
+            <Link to={`/`} style={{ textDecoration: 'none', color: 'white' }}>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">Home</Typography>
+              </MenuItem>
+            </Link>
+            <Link to={`/jobs`} style={{ textDecoration: 'none', color: 'white' }}>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">Jobs</Typography>
+              </MenuItem>
+            </Link>
+            <Link to={`/blog`} style={{ textDecoration: 'none', color: 'white' }}>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">Blog</Typography>
+              </MenuItem>
+            </Link>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar  />
+                <Avatar />
               </IconButton>
             </Tooltip>
             <Menu
@@ -175,35 +177,80 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-               {
-                isAuthenticated? (
+              {
+                isAuthenticated ? (
                   <div>
-                  <Link to={`/user/dashboard`} style={{textDecoration:'none',color:'black'}}>
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">DashBoard</Typography>
-                  </MenuItem>
-                  </Link>
-                  <MenuItem onClick={logoutHandler}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                  </div>
-                ):(
-                <div>
-                  <Link to={`/login`} style={{textDecoration:'none',color:'black'}}>
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Login</Typography>
-                  </MenuItem>
-                  </Link>
+                    {
+                      user && user.role === 'admin' ? (
+                        <div>
+                          <Link to={`/admin/dashboard`} style={{ textDecoration: 'none', color: 'black' }}>
+                            <MenuItem onClick={handleCloseNavMenu}>
+                              <Typography textAlign="center">Admin DashBoard</Typography>
+                            </MenuItem>
+                          </Link>
 
-                  <Link to={`/signup`} style={{textDecoration:'none',color:'black'}}>
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Sign Up</Typography>
-                  </MenuItem>
-                  </Link>
-                </div>
+                          <Link to={`/user/dashboard`} style={{ textDecoration: 'none', color: 'black' }}>
+                            <MenuItem onClick={handleCloseNavMenu}>
+                              <Typography textAlign="center">DashBoard</Typography>
+                            </MenuItem>
+                          </Link>
+                          <MenuItem onClick={logoutHandler}>
+                            <Typography textAlign="center">Logout</Typography>
+                          </MenuItem>
+                        </div>
+                      ) : (
+                        
+                          user && user.role === 'company' ? (
+                            <div>
+                              <Link to={`/admin/dashboard`} style={{ textDecoration: 'none', color: 'black' }}>
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                  <Typography textAlign="center">Company DashBoard</Typography>
+                                </MenuItem>
+                              </Link>
+    
+                              <Link to={`/user/dashboard`} style={{ textDecoration: 'none', color: 'black' }}>
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                  <Typography textAlign="center">DashBoard</Typography>
+                                </MenuItem>
+                              </Link>
+                              <MenuItem onClick={logoutHandler}>
+                                <Typography textAlign="center">Logout</Typography>
+                              </MenuItem>
+                            </div>
+                          ) : (
+                            <div>
+                              <Link to={`/user/dashboard`} style={{ textDecoration: 'none', color: 'black' }}>
+                                <MenuItem onClick={handleCloseNavMenu}>
+                                  <Typography textAlign="center">DashBoard</Typography>
+                                </MenuItem>
+                              </Link>
+                              <MenuItem onClick={logoutHandler}>
+                                <Typography textAlign="center">Logout</Typography>
+                              </MenuItem>
+                            </div>
+                          )
+                        
+                      )
+                    }
+
+                  </div>
+                ) : (
+                  <div>
+                    <Link to={`/login`} style={{ textDecoration: 'none', color: 'black' }}>
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography textAlign="center">Login</Typography>
+                      </MenuItem>
+                    </Link>
+
+                    <Link to={`/signup`} style={{ textDecoration: 'none', color: 'black' }}>
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography textAlign="center">Sign Up</Typography>
+                      </MenuItem>
+                    </Link>
+                  </div>
                 )
-               }
-              
+              }
+
             </Menu>
           </Box>
         </Toolbar>

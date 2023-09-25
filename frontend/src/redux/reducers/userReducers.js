@@ -1,6 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 export const userReducers = createReducer({},{
+
+//login User    
     loginRequest:(state)=>{
         state.loading= true;
     },
@@ -16,6 +18,8 @@ export const userReducers = createReducer({},{
         state.error= action.payload;
     },
 
+
+//load User    
     loadUserRequest:(state)=>{
         state.loading= true;
     },
@@ -29,7 +33,8 @@ export const userReducers = createReducer({},{
         state.isAuthenticated = false;
         state.error= action.payload;
     },
-    
+
+//logout user 
     logoutRequest:(state)=>{
         state.loading= true;
     },
@@ -51,4 +56,27 @@ export const userReducers = createReducer({},{
     clearMessage:(state)=>{
         state.message= null;
     }
+});
+
+export const allUserReducers = createReducer({users:[]},{
+    //all user
+    allUserRequest:(state)=>{
+        state.loading= true;
+    },
+    allUserSuccess:(state,action)=>{
+        state.loading= false;
+        state.users = action.payload.users;
+    },
+    allUserFail:(state,action)=>{
+        state.loading= false;
+        state.error= action.payload;
+    },
+        
+    clearErrors:(state)=>{
+        state.error= null;
+    },
+    clearMessage:(state)=>{
+        state.message= null;
+    }
+
 })

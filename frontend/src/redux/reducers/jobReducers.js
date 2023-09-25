@@ -26,3 +26,26 @@ export const loadJobReducers = createReducer({jobs:[]},{
         state.message= null;
     }
 })
+
+export const loadJobDetailsReducers = createReducer({job:{}},{
+    loadJobDetailsRequest:(state)=>{
+        state.loading= true;
+    },
+    loadJobDetailsSuccess:(state,action)=>{
+        state.loading= false;
+        state.success = action.payload.success;
+        state.job = action.payload.job;
+    },
+    loadJobDetailsFail:(state,action)=>{
+        state.loading= false;
+        state.error= action.payload;
+    },
+    
+    clearErrors:(state)=>{
+        state.error= null;
+    },
+    
+    clearMessage:(state)=>{
+        state.message= null;
+    }
+})
